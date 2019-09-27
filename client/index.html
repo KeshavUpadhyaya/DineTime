@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="dineTime">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+
+		<title>DineTime</title>
+
+		<!-- Bootstrap core CSS -->
+		<link
+			href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+
+		<link href="./css/form.css" rel="stylesheet" />
+
+		<script src="./js/app.js"></script>
+	</head>
+
+	<body>
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">DineTime</a>
+				</div>
+
+				<ul class="nav navbar-nav navbar-right">
+					<a class="nav-link" href="#">Home</a>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Page Content -->
+		<div class="container">
+			<div ng-view></div>
+		</div>
+
+		<footer class="footer bg-dark">
+			<div class="container text-center">
+				<small style="color: white;">2019 &copy;DineTime</small>
+			</div>
+		</footer>
+	</body>
+</html>
