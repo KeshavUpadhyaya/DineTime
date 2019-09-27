@@ -11,6 +11,7 @@ sudo apt-get install -y build-essential
 ## In se-customer/client run
 
 npm install
+
 npx parcel index.html
 
 ## In se-customer/server
