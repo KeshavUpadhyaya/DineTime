@@ -7,11 +7,6 @@ export default class authService {
 		this.$http = $http;
 		this.$q = $q;
 		this.$timeout = $timeout;
-
-		if (!localStorage.user && !localStorage.username) {
-			localStorage.user = false;
-			localStorage.username = "";
-		}
 		this.ip = "http://localhost:8000";
 	}
 
@@ -24,7 +19,7 @@ export default class authService {
 	}
 
 	isLoggedIn() {
-		if (localStorage.user == "true") {
+		if (sessionStorage.user == "true") {
 			return true;
 		} else {
 			return false;
@@ -39,7 +34,7 @@ export default class authService {
 	}
 
 	logout() {
-		localStorage.removeItem("user");
-		localStorage.removeItem("username");
+		sessionStorage.removeItem("user");
+		sessionStorage.removeItem("username");
 	}
 }

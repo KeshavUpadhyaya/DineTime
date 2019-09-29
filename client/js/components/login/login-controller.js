@@ -22,15 +22,15 @@ export default class loginController {
 		this.authService.login(this.username, this.password).then(
 			function(response) {
 				if (response.data.status == "success") {
-					localStorage.user = true;
-					localStorage.username = ctrl.username;
+					sessionStorage.user = true;
+					sessionStorage.username = ctrl.username;
 					ctrl.success = true;
 					ctrl.message = "Login Successful!";
 					ctrl.$timeout(function() {
 						ctrl.$location.path("/welcome");
 					}, 1000);
 				} else {
-					localStorage.user = false;
+					sessionStorage.user = false;
 					ctrl.error = true;
 					ctrl.message = "Wrong username or password!";
 					ctrl.username = "";
@@ -38,7 +38,7 @@ export default class loginController {
 				}
 			},
 			function() {
-				localStorage.user = false;
+				sessionStorage.user = false;
 				ctrl.error = true;
 				ctrl.message =
 					"Something went wrong on the server! Please try again!";
