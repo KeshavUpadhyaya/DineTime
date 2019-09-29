@@ -1,10 +1,8 @@
 import loginTemplate from "./login.html";
+import loginController from "./login-controller";
 
 export const loginComponent = {
 	template: loginTemplate,
-	controller: class demoController {
-		constructor() {
-			this.controllerName = "hi";
-		}
-	}
+	controller: loginController,
+	controllerAs: "$ctrl"
 };

@@ -4,6 +4,7 @@ import ngResource from "angular-resource";
 
 import { loginComponent } from "./components/login";
 import { signupComponent } from "./components/signup";
+import { logoutComponent } from "./components/logout";
 
 import authService from "./services/autentication-service";
 
@@ -12,6 +13,7 @@ angular
 
 	.component("loginComponent", loginComponent)
 	.component("signupComponent", signupComponent)
+	.component("logoutComponent", logoutComponent)
 
 	.service("authService", authService)
 
@@ -19,10 +21,26 @@ angular
 		$routeProvider
 
 			.when("/", {
-				template: "<login-component></login-component>"
+				template: "<login-component></login-component>",
+				access: { restricted: false }
 			})
 
 			.when("/signup", {
-				template: "<signup-component></signup-component>"
+				template: "<signup-component></signup-component>",
+				access: { restricted: false }
+			})
+
+			.when("/welcome", {
+				template: "<p> Hi you have successfully logged in!</p>",
+				access: { restricted: true }
 			});
+	})
+
+	.run(function($rootScope, $location, $route, authService) {
+		$rootScope.$on("$routeChangeStart", function(event, next, current) {
+			if (next.access.restricted && !authService.isLoggedIn()) {
+				$location.path("/");
+				$route.reload();
+			}
+		});
 	});

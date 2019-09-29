@@ -1,5 +1,3 @@
-import authService from "../../services/autentication-service";
-
 export default class signupController {
 	static get $inject() {
 		return ["authService", "$location", "$timeout"];
@@ -17,6 +15,8 @@ export default class signupController {
 	}
 
 	register() {
+		this.error = false;
+		this.success = false;
 		console.log("hi");
 		const ctrl = this;
 		this.authService.register(this.username, this.password).then(

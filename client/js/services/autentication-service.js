@@ -8,16 +8,38 @@ export default class authService {
 		this.$q = $q;
 		this.$timeout = $timeout;
 
-		//create user variable
-		this.user = null;
+		if (!localStorage.user && !localStorage.username) {
+			localStorage.user = false;
+			localStorage.username = "";
+		}
+		this.ip = "http://localhost:8000";
 	}
 
 	register(username, password) {
-		const service = this;
-		return this.$http.post("http://localhost:8000/api/v1/register", {
+		return this.$http.post(this.ip + "/api/v1/register", {
 			username: username,
 			password: password,
 			fav_category_id: 1
 		});
+	}
+
+	isLoggedIn() {
+		if (localStorage.user == "true") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	login(username, password) {
+		return this.$http.post(this.ip + "/api/v1/login", {
+			username: username,
+			password: password
+		});
+	}
+
+	logout() {
+		localStorage.removeItem("user");
+		localStorage.removeItem("username");
 	}
 }

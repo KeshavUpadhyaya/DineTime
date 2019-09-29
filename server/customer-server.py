@@ -66,29 +66,12 @@ def login():
             users[row[0]] = row[1]
 
         if username in users.keys() and encrypt(password) == users[username]:
-            session["logged_in"] = True
             status = "success"
+            print("Login successful!!")
         else:
             status = "failure"
 
     return jsonify({"status": status})
-
-
-# function to logout
-@app.route("/api/v1/logout")
-def logout():
-    session.pop("logged_in", None)
-    return jsonify({"status": "success"})
-
-
-# checking if user is logged in
-@app.route("/api/v1/status")
-def status():
-    if session.get("logged_in"):
-        if session["logged_in"]:
-            return jsonify({"status": True})
-    else:
-        return jsonify({"status": False})
 
 
 @app.route("/")
