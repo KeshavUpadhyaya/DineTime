@@ -16,6 +16,8 @@ sudo apt-get install -y nodejs
 
 sudo apt-get install -y build-essential
 
+### Installing dependencies and running..
+
 npm install
 
 npx parcel index.html
