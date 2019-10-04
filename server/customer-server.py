@@ -106,7 +106,7 @@ def logout():
 @app.route("/api/v1/status")
 def logged_in():
     if current_user.is_authenticated:
-        return jsonify({"status": 1})
+        return jsonify({"status": 1, "username": current_user.id})
     else:
         return jsonify({"status": 0})
 
