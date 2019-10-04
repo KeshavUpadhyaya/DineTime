@@ -34,8 +34,7 @@ export default class authService {
 	}
 
 	logout() {
-		sessionStorage.removeItem("user");
-		sessionStorage.removeItem("username");
+		sessionStorage.clear();
 		return this.$http.get(this.ip + "/api/v1/logout");
 	}
 }
