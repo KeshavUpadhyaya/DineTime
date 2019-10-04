@@ -1,12 +1,12 @@
 # se-customer
 
-## In se-customer/server
+## In se-customer/server run the following commands
 
 pip3 install -r requirements.txt
 
 python3 customer-server.py
 
-## In se-customer/client run
+## In se-customer/client run the following commands
 
 ### Install nodejs v8.x
 
