@@ -16,4 +16,4 @@ npx parcel index.html
 
 ## In se-customer/server
 
-Install flask,requests
+pip3 install -r requirements.txt
