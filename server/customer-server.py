@@ -7,11 +7,31 @@ import os
 from flask_cors import CORS
 from flask import g
 import hashlib
+from flask_login import UserMixin
+from flask_login import LoginManager
+from flask_login import login_user
+from flask_login import logout_user
+from flask_login import login_required
+from flask_login import current_user
+
+
+class User(UserMixin):
+    pass
 
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 CORS(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def user_loader(username):
+    user = User()
+    user.id = username
+    return user
+
 
 # function to encrypt password
 def encrypt(str):
@@ -66,12 +86,29 @@ def login():
             users[row[0]] = row[1]
 
         if username in users.keys() and encrypt(password) == users[username]:
+            user = User()
+            user.id = username
+            login_user(user)
             status = "success"
             print("Login successful!!")
         else:
             status = "failure"
 
     return jsonify({"status": status})
+
+
+@app.route("/api/v1/logout")
+def logout():
+    logout_user()
+    return jsonify({"status": 1})
+
+
+@app.route("/api/v1/status")
+def logged_in():
+    if current_user.is_authenticated:
+        return jsonify({"status": 1})
+    else:
+        return jsonify({"status": 0})
 
 
 @app.route("/")
