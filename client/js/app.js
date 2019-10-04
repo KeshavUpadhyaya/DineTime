@@ -5,6 +5,7 @@ import ngResource from "angular-resource";
 import { loginComponent } from "./components/login";
 import { signupComponent } from "./components/signup";
 import { logoutComponent } from "./components/logout";
+import { dineTakeComponent } from "./components/dine-or-take";
 
 import authService from "./services/autentication-service";
 
@@ -14,6 +15,7 @@ angular
 	.component("loginComponent", loginComponent)
 	.component("signupComponent", signupComponent)
 	.component("logoutComponent", logoutComponent)
+	.component("dineTakeComponent", dineTakeComponent)
 
 	.service("authService", authService)
 
@@ -30,8 +32,33 @@ angular
 				access: { restricted: false }
 			})
 
-			.when("/welcome", {
-				template: "<p> Hi you have successfully logged in!</p>",
+			.when("/dine-or-take", {
+				template: "<dine-take-component></dine-take-component>",
+				access: { restricted: true }
+			})
+
+			.when("/seating", {
+				template: "<h1>seating<h1>",
+				access: { restricted: true }
+			})
+
+			.when("/menu", {
+				template: "<h1>menu</h1>",
+				access: { restricted: true }
+			})
+
+			.when("/confirm-order", {
+				template: "<h1>confrim order</h1>",
+				access: { restricted: true }
+			})
+
+			.when("/bill", {
+				template: "<h1>bill</h1>",
+				access: { restricted: true }
+			})
+
+			.when("/rating", {
+				template: "<h1>rating</h1>",
 				access: { restricted: true }
 			});
 	})
