@@ -13,6 +13,7 @@
 		"angular-resource": "^1.7.8",
 		"angular-route": "^1.7.8",
 		"angular-ui-bootstrap": "2.5.6",
+		"angular1-star-rating": "^1.2.11",
 		"bootstrap": "^4.3.1",
 		"parcel-bundler": "^1.12.3"
 	},
