@@ -1,6 +1,6 @@
 # se-customer
 
-## Install nodejs
+## Install nodejs **v8.16.1**
 
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
 
