@@ -4,7 +4,7 @@
 
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
 
-Reopen the terminal
+<span style="color:red"> Reopen the terminal </span>
 
 nvm install v8.16.1
 
