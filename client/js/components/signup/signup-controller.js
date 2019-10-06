@@ -26,7 +26,7 @@ export default class signupController {
 					ctrl.message = "Successfull! Redirecting to login..";
 					ctrl.$timeout(function() {
 						ctrl.$location.path("/");
-					}, 1500);
+					}, 500);
 				} else {
 					ctrl.error = true;
 					ctrl.message = "Username already exists! Please try again!";

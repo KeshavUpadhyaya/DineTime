@@ -27,7 +27,7 @@ export default class ratingController {
 					ctrl.status = 1;
 					ctrl.$timeout(function() {
 						ctrl.$location.path("/dine-or-take");
-					}, 1000);
+					}, 500);
 				}
 			});
 	}
