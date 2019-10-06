@@ -10,12 +10,18 @@
 	"license": "ISC",
 	"dependencies": {
 		"angular": "^1.7.8",
+		"angular-animate": "^1.7.8",
+		"angular-aria": "^1.7.8",
+		"angular-jk-rating-stars": "^1.0.8",
+		"angular-material": "^1.1.20",
 		"angular-resource": "^1.7.8",
 		"angular-route": "^1.7.8",
 		"angular-ui-bootstrap": "2.5.6",
 		"angular1-star-rating": "^1.2.11",
 		"bootstrap": "^4.3.1",
-		"parcel-bundler": "^1.12.3"
+		"material-icons": "^0.3.1",
+		"parcel-bundler": "^1.12.3",
+		"ui-bootstrap4": "^3.0.6"
 	},
 	"devDependencies": {
 		"parcel-bundler": "^1.12.3"

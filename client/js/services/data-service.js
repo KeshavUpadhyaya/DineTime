@@ -1,13 +1,21 @@
 export default class dataService {
 	static get $inject() {
-		return ["$http", "dataService"];
+		return ["$http"];
 	}
 
-	constructor($http, dataService) {
-		this.ip = "http://localhost:8000";
+	constructor($http) {
+		console.log("data service constructor called");
+		this.ip = "http://localhost:5000";
 		this.$http = $http;
-		this.dataService = dataService;
+		this.order = { id: 1 };
 	}
 
-	getData() {}
+	sendRating(orderId, ambienceRating, foodRating, moneyRating) {
+		return this.$http.post(this.ip + "/api/v1/rate", {
+			order_id: orderId,
+			ambience: ambienceRating,
+			food_quality: foodRating,
+			value_for_money: moneyRating
+		});
+	}
 }

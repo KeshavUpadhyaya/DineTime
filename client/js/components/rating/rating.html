@@ -1,1 +1,44 @@
-<h1>Rating</h1>
+<div
+	class="card text-center"
+	style="position:relative; top: 60px; margin-bottom: 50px;bottom: 50px;"
+>
+	<div ng-show="$ctrl.status" class="alert alert-success">
+		Submitted Successfully!
+	</div>
+	<div class="card-header text-white bg-dark">
+		Rate your experience:
+	</div>
+	<div class="card-body">
+		Ambience :
+		<jk-rating-stars rating="$ctrl.ambienceRating"></jk-rating-stars>
+		<hr />
+
+		Food quality :
+		<jk-rating-stars rating="$ctrl.foodRating"></jk-rating-stars>
+		<hr />
+
+		Value for money :
+		<jk-rating-stars rating="$ctrl.moneyRating"></jk-rating-stars>
+		<hr />
+	</div>
+
+	<div style="width: 30%; margin: 0 auto; bottom: 20px;">
+		<button
+			type="button"
+			class="btn btn-primary btn-lg"
+			ng-click="$ctrl.rate()"
+			ng-disabled="$ctrl.checkRating()"
+		>
+			Submit
+		</button>
+
+		<button
+			type="button"
+			class="btn btn-danger btn-lg"
+			ng-click="$ctrl.backToOrder()"
+		>
+			Exit
+		</button>
+	</div>
+	<br />
+</div>

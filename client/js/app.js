@@ -1,7 +1,11 @@
 import angular from "angular";
 import ngRoute from "angular-route";
 import ngResource from "angular-resource";
-import uiBootstrap from "angular-ui-bootstrap";
+import uiBootstrap from "ui-bootstrap4";
+import jkAngularRatingStars from "angular-jk-rating-stars";
+import angularAnimate from "angular-animate";
+import angularAria from "angular-aria";
+import angularMaterial from "angular-material";
 
 import { loginComponent } from "./components/login";
 import { signupComponent } from "./components/signup";
@@ -17,7 +21,15 @@ import authService from "./services/autentication-service";
 import dataService from "./services/data-service";
 
 angular
-	.module("dineTime", [ngRoute, ngResource, uiBootstrap])
+	.module("dineTime", [
+		ngRoute,
+		ngResource,
+		uiBootstrap,
+		jkAngularRatingStars,
+		angularAnimate,
+		angularAria,
+		angularMaterial
+	])
 
 	.component("loginComponent", loginComponent)
 	.component("signupComponent", signupComponent)
@@ -80,7 +92,7 @@ angular
 		$rootScope.$on("$routeChangeStart", function(event, next, current) {
 			if (next.access.restricted && !authService.isLoggedIn()) {
 				$location.path("/");
-				$route.reload();
+				//$route.reload();
 			}
 		});
 	});
