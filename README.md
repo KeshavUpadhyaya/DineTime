@@ -18,4 +18,4 @@ python3 customer-server.py
 
 npm install
 
-npx parcel index.html
+npm start
