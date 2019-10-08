@@ -18,4 +18,8 @@ export default class dataService {
 			value_for_money: moneyRating
 		});
 	}
+
+	getMenuItems() {
+		return this.$http.get(this.ip + "/api/v1/menu");
+	}
 }

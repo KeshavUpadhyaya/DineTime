@@ -1,1 +1,20 @@
-<h1>Menu</h1>
+<div style="float: left">
+	<ul
+		class="nav nav-pills flex-column"
+		style="width: 100%; position: relative; top:20px;"
+	>
+		<li class="nav-item">
+			<a style="cursor: pointer" class="nav-link active">{{
+				$ctrl.categories[0]
+			}}</a>
+		</li>
+
+		<li class="nav-item" ng-repeat="c in $ctrl.categories" ng-if="!$first">
+			<a style="cursor: pointer" class="nav-link">{{ c }}</a>
+		</li>
+	</ul>
+</div>
+
+<div style="float: left ;">
+	<p>hi</p>
+</div>
