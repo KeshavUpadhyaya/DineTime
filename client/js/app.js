@@ -44,7 +44,7 @@ angular
 	.service("authService", authService)
 	.service("dataService", dataService)
 
-	.config(function($routeProvider) {
+	.config(function($routeProvider, $locationProvider) {
 		$routeProvider
 
 			.when("/", {
@@ -86,6 +86,8 @@ angular
 				template: "<rating-component></rating-component>",
 				access: { restricted: true }
 			});
+
+		$locationProvider.html5Mode(true);
 	})
 
 	.run(function($rootScope, $location, $route, authService) {
