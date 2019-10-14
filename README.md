@@ -19,3 +19,5 @@ python3 customer-server.py
 npm install
 
 npm start
+
+**Open localhost:1234 in chrome or firefox**
