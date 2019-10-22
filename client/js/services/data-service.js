@@ -7,7 +7,7 @@ export default class dataService {
 		console.log("data service constructor called");
 		this.ip = "http://localhost:5000";
 		this.$http = $http;
-		this.order = { id: 1 };
+		this.order = {};
 	}
 
 	sendRating(orderId, ambienceRating, foodRating, moneyRating) {
