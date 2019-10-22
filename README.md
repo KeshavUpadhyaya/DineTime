@@ -1,6 +1,8 @@
 # se-customer
 
-<span style="color:red">some _Operating System: Ubuntu 16.04 or higher_ text</span>
+```diff
+- Operating System: Ubuntu 16.04 or higher
+```
 
 ## Install nodejs **v8.16.1**
 
