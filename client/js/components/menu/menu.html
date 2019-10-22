@@ -4,17 +4,61 @@
 		style="width: 100%; position: relative; top:20px;"
 	>
 		<li class="nav-item">
-			<a style="cursor: pointer" class="nav-link active">{{
-				$ctrl.categories[0]
-			}}</a>
+			<a
+				style="cursor: pointer"
+				class="nav-link"
+				ng-class="{active: $ctrl.show == 0}"
+				ng-click="$ctrl.show = 0"
+				>{{ $ctrl.categories[0] }}</a
+			>
 		</li>
 
 		<li class="nav-item" ng-repeat="c in $ctrl.categories" ng-if="!$first">
-			<a style="cursor: pointer" class="nav-link">{{ c }}</a>
+			<a
+				style="cursor: pointer"
+				class="nav-link"
+				ng-class="{active: $ctrl.show == $index}"
+				ng-click="$ctrl.show = $index"
+				>{{ c }}</a
+			>
 		</li>
 	</ul>
 </div>
 
-<div style="float: left ;">
-	<p>hi</p>
+<div style="float: left ; width: 80%;">
+	<table
+		class="table table-bordered"
+		ng-repeat="c in $ctrl.data"
+		ng-show="$ctrl.show == $index"
+	>
+		<tr>
+			<th colspan="2">Menu</th>
+			<th>Price</th>
+			<th style="width: 20%;">{{ $ctrl.getTotalCount() }} items</th>
+		</tr>
+		<tr ng-repeat="item in c">
+			<td style="width: 120px;">
+				<img
+					ng-src="{{ $ctrl.formatImageName(item.name) }}.jpeg"
+					style="height: 120px; width: 120px;"
+				/>
+			</td>
+			<td>{{ item.name }}</td>
+			<td>&#8377;{{ item.price }}</td>
+			<td class="tdCenter">
+				<a href="" ng-click="$ctrl.addItem(item.name,item.price,1)">
+					Add Item
+				</a>
+			</td>
+		</tr>
+	</table>
 </div>
+
+<button
+	type="button"
+	class="btn btn-primary btn-lg"
+	style=" position: relative; margin: 0 auto; left: 50%;"
+	ng-click="$ctrl.showConfirmOrderPage()"
+>
+	View order
+</button>
