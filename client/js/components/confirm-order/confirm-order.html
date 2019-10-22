@@ -1,1 +1,74 @@
-<h1>Confirm order</h1>
+<h2>Confirm Order</h2>
+<table class="table table-bordered">
+	<tr>
+		<td><b>Item</b></td>
+		<td class="tdCenter"><b>Quantity</b></td>
+		<td class="tdRight"><b>Price</b></td>
+		<td></td>
+	</tr>
+
+	<!-- empty items list message -->
+	<tr ng-hide="$ctrl.getTotalCount() > 0">
+		<td class="tdCenter" colspan="4">
+			Your item list is empty!
+		</td>
+	</tr>
+
+	<tr ng-repeat="item in $ctrl.items">
+		<td>{{ item.name }}</td>
+		<td class="tdCenter">
+			<div class="input-append">
+				<input
+					class="text-center"
+					type="tel"
+					ng-model="item.quantity"
+					ng-disabled="true"
+				/>
+				<button
+					class="btn btn-success"
+					type="button"
+					ng-disabled="item.quantity >= 1000"
+					ng-click="$ctrl.addItem(item.name, item.price,1)"
+				>
+					+
+				</button>
+				<button
+					class="btn btn-danger"
+					type="button"
+					ng-disabled="item.quantity <= 1"
+					ng-click="$ctrl.addItem(item.name, item.price, -1)"
+				>
+					-
+				</button>
+			</div>
+		</td>
+		<td class="tdRight">&#8377; {{ item.price * item.quantity }}</td>
+		<td class="tdCenter" title="remove from cart">
+			<a
+				href=""
+				ng-click="$ctrl.addItem(item.name, item.price, -10000000)"
+			>
+				Remove Item
+			</a>
+		</td>
+	</tr>
+
+	<tr class="well">
+		<td><b>Total</b></td>
+		<td class="tdCenter">
+			<b>{{ $ctrl.getTotalCount() }}</b>
+		</td>
+		<td class="tdRight">
+			<b>&#8377; {{ $ctrl.getTotalPrice() }}</b>
+		</td>
+		<td></td>
+	</tr>
+</table>
+
+<button
+	type="button"
+	class="btn btn-primary btn-block"
+	ng-disabled="$ctrl.getTotalCount()<1"
+>
+	Confirm Order
+</button>
