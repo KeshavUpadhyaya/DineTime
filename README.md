@@ -1,7 +1,7 @@
 # se-customer
 
 ```diff
-- Operating System: Ubuntu 16.04 or higher
+!Operating System: Ubuntu 16.04 or higher
 ```
 
 ## Install nodejs **v8.16.1**
