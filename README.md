@@ -1,5 +1,7 @@
 # se-customer
 
+<span style="color:red">some _Operating System: Ubuntu 16.04 or higher_ text</span>
+
 ## Install nodejs **v8.16.1**
 
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
