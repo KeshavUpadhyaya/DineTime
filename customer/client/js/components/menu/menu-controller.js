@@ -34,7 +34,10 @@ export default class menuController {
 		});
 	}
 
-	addItem(name, price, quantity) {
+	addItem(name, price, quantity, take_away_charges) {
+		if (sessionStorage.takeAway == "0") {
+			take_away_charges = 0;
+		}
 		console.log("quantity = ", quantity);
 		var found = false;
 		for (var i = 0; i < this.items.length && !found; i++) {
@@ -53,6 +56,7 @@ export default class menuController {
 			item["name"] = name;
 			item["quantity"] = quantity;
 			item["price"] = price;
+			item["take_away_charges"] = take_away_charges;
 			this.items.push(item);
 			//console.log(this.items);
 		}
