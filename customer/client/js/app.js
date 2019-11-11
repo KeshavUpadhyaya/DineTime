@@ -14,7 +14,6 @@ import { dineTakeComponent } from "./components/dine-or-take";
 import { seatingComponent } from "./components/seating";
 import { menuComponent } from "./components/menu";
 import { orderComponent } from "./components/confirm-order";
-import { billComponent } from "./components/bill";
 import { ratingComponent } from "./components/rating";
 
 import authService from "./services/autentication-service";
@@ -38,7 +37,6 @@ angular
 	.component("seatingComponent", seatingComponent)
 	.component("menuComponent", menuComponent)
 	.component("orderComponent", orderComponent)
-	.component("billComponent", billComponent)
 	.component("ratingComponent", ratingComponent)
 
 	.service("authService", authService)
