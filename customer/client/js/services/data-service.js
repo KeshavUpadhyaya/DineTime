@@ -10,12 +10,13 @@ export default class dataService {
 		this.order = {};
 	}
 
-	sendRating(orderId, ambienceRating, foodRating, moneyRating) {
+	sendRating(orderId, ambienceRating, foodRating, moneyRating, feedback) {
 		return this.$http.post(this.ip + "/api/v1/rate", {
 			order_id: orderId,
 			ambience: ambienceRating,
 			food_quality: foodRating,
-			value_for_money: moneyRating
+			value_for_money: moneyRating,
+			feedback_text: feedback
 		});
 	}
 

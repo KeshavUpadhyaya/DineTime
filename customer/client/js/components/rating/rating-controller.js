@@ -10,6 +10,7 @@ export default class ratingController {
 		this.moneyRating = 0;
 		this.$location = $location;
 		this.$timeout = $timeout;
+		this.feedback = "";
 	}
 
 	rate() {
@@ -20,7 +21,8 @@ export default class ratingController {
 				this.dataService.order.id,
 				this.ambienceRating,
 				this.foodRating,
-				this.moneyRating
+				this.moneyRating,
+				this.feedback
 			)
 			.then(function(response) {
 				if (response.data.status == 1) {
