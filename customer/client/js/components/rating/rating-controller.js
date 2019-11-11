@@ -45,6 +45,14 @@ export default class ratingController {
 	}
 
 	backToOrder() {
+		for (var i = 0; i, sessionStorage.length; i++) {
+			if (
+				sessionStorage.key(i) != "user" ||
+				sessionStorage.key(i) != "username"
+			) {
+				sessionStorage.removeItem(sessionStorage.key(i));
+			}
+		}
 		this.$location.path("/dine-or-take");
 	}
 }
