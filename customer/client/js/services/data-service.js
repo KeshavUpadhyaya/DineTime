@@ -45,7 +45,7 @@ export default class dataService {
 	}
 
 	getFavouriteItems(customerId) {
-		return this.$http.get(this.ip + "/api/v1/getfav" + customerId);
+		return this.$http.get(this.ip + "/api/v1/getfav/" + customerId);
 	}
 
 	removeFavoutiteItem(customerId, itemName) {

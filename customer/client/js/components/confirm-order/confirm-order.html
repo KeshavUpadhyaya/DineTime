@@ -4,12 +4,13 @@
 		<td><b>Item</b></td>
 		<td class="tdCenter"><b>Quantity</b></td>
 		<td class="tdRight"><b>Price</b></td>
+		<td class="tdRight"><b>Take Away Charges</b></td>
 		<td></td>
 	</tr>
 
 	<!-- empty items list message -->
 	<tr ng-hide="$ctrl.getTotalCount() > 0">
-		<td class="tdCenter" colspan="4">
+		<td class="tdCenter" colspan="5">
 			Your item list is empty!
 		</td>
 	</tr>
@@ -28,7 +29,7 @@
 					class="btn btn-success"
 					type="button"
 					ng-disabled="item.quantity >= 1000"
-					ng-click="$ctrl.addItem(item.name, item.price,1)"
+					ng-click="$ctrl.addItem(item.name, item.price,1,item.take_away_charges)"
 				>
 					+
 				</button>
@@ -36,17 +37,20 @@
 					class="btn btn-danger"
 					type="button"
 					ng-disabled="item.quantity <= 1"
-					ng-click="$ctrl.addItem(item.name, item.price, -1)"
+					ng-click="$ctrl.addItem(item.name, item.price, -1,item.take_away_charges)"
 				>
 					-
 				</button>
 			</div>
 		</td>
 		<td class="tdRight">&#8377; {{ item.price * item.quantity }}</td>
+		<td class="tdRight">
+			&#8377; {{ item.take_away_charges * item.quantity }}
+		</td>
 		<td class="tdCenter" title="remove from cart">
 			<a
 				href=""
-				ng-click="$ctrl.addItem(item.name, item.price, -10000000)"
+				ng-click="$ctrl.addItem(item.name, item.price, -10000000,item.take_away_charges)"
 			>
 				Remove Item
 			</a>
@@ -61,7 +65,15 @@
 		<td class="tdRight">
 			<b>&#8377; {{ $ctrl.getTotalPrice() }}</b>
 		</td>
-		<td></td>
+		<td class="tdRight">
+			<b>&#8377; {{ $ctrl.getTotalTakeAwayCharges() }}</b>
+		</td>
+		<td class="tdRight">
+			<b>
+				Total = &#8377;
+				{{ $ctrl.getTotalPrice() + $ctrl.getTotalTakeAwayCharges() }}</b
+			>
+		</td>
 	</tr>
 </table>
 
@@ -69,6 +81,34 @@
 	type="button"
 	class="btn btn-primary btn-block"
 	ng-disabled="$ctrl.getTotalCount()<1"
+	ng-click="$ctrl.confirmOrder()"
 >
 	Confirm Order
 </button>
+
+<hr />
+
+<div ng-show="$ctrl.showPayment == true">
+	<h2>Payment options:</h2>
+	<form>
+		<div ng-repeat="p in $ctrl.paymentMethods track by $index">
+			<input
+				type="radio"
+				name="occurrences"
+				ng-value="p"
+				ng-model="$ctrl.mode"
+			/>
+			<label>{{ p }}</label>
+		</div>
+	</form>
+	<div>The selected value is : {{ $ctrl.mode }}</div>
+
+	<button
+		type="button"
+		class="btn btn-primary btn-block"
+		ng-disabled="$ctrl.mode == null"
+		ng-click="$ctrl.confirmPayment()"
+	>
+		Confirm Payment
+	</button>
+</div>
