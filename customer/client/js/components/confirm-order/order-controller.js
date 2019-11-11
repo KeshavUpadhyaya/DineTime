@@ -8,6 +8,7 @@ export default class orderController {
 		this.$location = $location;
 		this.$window = $window;
 		this.getPaymentMethods();
+		this.items = [];
 		if (sessionStorage.items) {
 			this.items = JSON.parse(sessionStorage.items);
 			console.log(this.items);
