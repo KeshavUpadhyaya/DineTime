@@ -77,11 +77,6 @@ angular
 				access: { restricted: true }
 			})
 
-			.when("/bill", {
-				template: "<bill-component></bill-component>",
-				access: { restricted: true }
-			})
-
 			.when("/rating", {
 				template: "<rating-component></rating-component>",
 				access: { restricted: true }
