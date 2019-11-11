@@ -1,14 +1,16 @@
 export default class menuController {
 	static get $inject() {
-		return ["dataService", "$location"];
+		return ["dataService", "$location", "$window"];
 	}
 
-	constructor(dataService, $location) {
+	constructor(dataService, $location, $window) {
 		this.dataService = dataService;
 		this.$location = $location;
+		this.$window = $window;
 		this.show = 0;
 		console.log("inside menu constructor");
 		this.getMenuItems();
+		this.getFavItems();
 		this.items = [];
 		if (sessionStorage.items) {
 			this.items = JSON.parse(sessionStorage.items);
@@ -76,5 +78,34 @@ export default class menuController {
 			count += item.quantity;
 		}
 		return count;
+	}
+
+	sendFavouriteItem(itemName) {
+		const ctrl = this;
+		const customerId = sessionStorage.username;
+		this.dataService
+			.sendFavouriteItem(customerId, itemName)
+			.then(function(response) {
+				ctrl.$window.alert("Item added to favourites successfully!");
+			});
+	}
+
+	getFavItems() {
+		const ctrl = this;
+		this.dataService.getFavouriteItems().then(function(response) {
+			console.log(response.data);
+			ctrl.favData = response.data.Favourites;
+			console.log(ctrl.favData);
+		});
+	}
+
+	removeFavouriteItem(itemName) {
+		const ctrl = this;
+		const customerId = sessionStorage.username;
+		this.dataService
+			.removeFavoutiteItem(customerId, itemName)
+			.then(function(response) {
+				ctrl.$window.alert("Item removed successfully!");
+			});
 	}
 }

@@ -7,6 +7,15 @@
 			<a
 				style="cursor: pointer"
 				class="nav-link"
+				ng-class="{active: $ctrl.show == 9999}"
+				ng-click="$ctrl.show = 9999"
+				>Favourites</a
+			>
+		</li>
+		<li class="nav-item">
+			<a
+				style="cursor: pointer"
+				class="nav-link"
 				ng-class="{active: $ctrl.show == 0}"
 				ng-click="$ctrl.show = 0"
 				>{{ $ctrl.categories[0] }}</a
@@ -26,6 +35,43 @@
 </div>
 
 <div style="float: left ; width: 80%;">
+	<table class="table table-bordered" ng-show="$ctrl.show == 9999">
+		<tr>
+			<th colspan="2">Menu</th>
+			<th>Price</th>
+			<th style="width: 20%;">Take Away Charges</th>
+			<th style="width: 20%;">{{ $ctrl.getTotalCount() }} items</th>
+		</tr>
+		<tr ng-repeat="item in $ctrl.favData">
+			<td style="width: 120px;">
+				<img
+					ng-src="{{ $ctrl.formatImageName(item.name) }}.jpeg"
+					style="height: 120px; width: 120px;"
+				/>
+			</td>
+			<td>
+				{{ item.name }}<br />
+				<a
+					href=""
+					ng-click="$ctrl.removeFavouriteItem(item.name)"
+					style="color:red"
+				>
+					Remove item
+				</a>
+			</td>
+			<td>&#8377;{{ item.price }}</td>
+			<td>&#8377;{{ item.take_away_charges }}</td>
+			<td class="tdCenter">
+				<a
+					href=""
+					ng-click="$ctrl.addItem(item.name,item.price,1,item.take_away_charges)"
+				>
+					Add Item <br />
+				</a>
+			</td>
+		</tr>
+	</table>
+
 	<table
 		class="table table-bordered"
 		ng-repeat="c in $ctrl.data"
@@ -44,7 +90,16 @@
 					style="height: 120px; width: 120px;"
 				/>
 			</td>
-			<td>{{ item.name }}</td>
+			<td>
+				{{ item.name }}<br />
+				<a
+					href=""
+					ng-click="$ctrl.sendFavouriteItem(item.name)"
+					style="color:red"
+				>
+					Add to Favourites
+				</a>
+			</td>
 			<td>&#8377;{{ item.price }}</td>
 			<td>&#8377;{{ item.take_away_charges }}</td>
 			<td class="tdCenter">
@@ -52,7 +107,7 @@
 					href=""
 					ng-click="$ctrl.addItem(item.name,item.price,1,item.take_away_charges)"
 				>
-					Add Item
+					Add Item <br />
 				</a>
 			</td>
 		</tr>
