@@ -13,7 +13,7 @@
 	}
 
 	/* Hide the browser's default radio button */
-	.container input {
+	.container > input {
 		position: absolute;
 		opacity: 0;
 		cursor: pointer;
@@ -135,8 +135,8 @@
 		</td>
 		<td class="tdRight">
 			<b>
-				Total = &#8377;
-				{{ $ctrl.getTotalPrice() + $ctrl.getTotalTakeAwayCharges() }}</b
+				Total = &#8377; {{ $ctrl.getTotalPrice() +
+				$ctrl.getTotalTakeAwayCharges() }}</b
 			>
 		</td>
 	</tr>
