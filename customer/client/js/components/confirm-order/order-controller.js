@@ -1,12 +1,13 @@
 export default class orderController {
 	static get $inject() {
-		return ["dataService", "$location", "$window"];
+		return ["dataService", "$location", "$window", "$timeout"];
 	}
 
-	constructor(dataService, $location, $window) {
+	constructor(dataService, $location, $window, $timeout) {
 		this.dataService = dataService;
 		this.$location = $location;
 		this.$window = $window;
+		this.$timeout = $timeout;
 		this.getPaymentMethods();
 		this.items = [];
 		if (sessionStorage.items) {
@@ -136,6 +137,10 @@ export default class orderController {
 			if (response.data.approval == 1) {
 				ctrl.$window.alert("Payment approved!");
 				ctrl.$location.path("/rating");
+			} else {
+				ctrl.$timeout(function() {
+					ctrl.confirmPayment();
+				}, 1500);
 			}
 		});
 	}
