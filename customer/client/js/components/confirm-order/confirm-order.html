@@ -61,122 +61,138 @@
 		border-radius: 50%;
 		background: white;
 	}
+
+	.stuff > ul,
+	li,
+	table,
+	th,
+	tr,
+	td,
+	form {
+		background-color: #f5f5f5;
+	}
 </style>
 
-<h2>Confirm Order</h2>
-<table class="table table-bordered">
-	<tr>
-		<td><b>Item</b></td>
-		<td class="tdCenter"><b>Quantity</b></td>
-		<td class="tdRight"><b>Price</b></td>
-		<td class="tdRight"><b>Take Away Charges</b></td>
-		<td></td>
-	</tr>
+<div style="background-color: #f5f5f5;">
+	<div class="stuff">
+		<table class="table table-bordered">
+			<tr>
+				<td><b>Item</b></td>
+				<td class="tdCenter"><b>Quantity</b></td>
+				<td class="tdRight"><b>Price</b></td>
+				<td class="tdRight"><b>Take Away Charges</b></td>
+				<td></td>
+			</tr>
 
-	<!-- empty items list message -->
-	<tr ng-hide="$ctrl.getTotalCount() > 0">
-		<td class="tdCenter" colspan="5">
-			Your item list is empty!
-		</td>
-	</tr>
+			<!-- empty items list message -->
+			<tr ng-hide="$ctrl.getTotalCount() > 0">
+				<td class="tdCenter" colspan="5">
+					Your item list is empty!
+				</td>
+			</tr>
 
-	<tr ng-repeat="item in $ctrl.items">
-		<td>{{ item.name }}</td>
-		<td class="tdCenter">
-			<div class="input-append">
-				<input
-					class="text-center"
-					type="tel"
-					ng-model="item.quantity"
-					ng-disabled="true"
-				/>
-				<button
-					class="btn btn-success"
-					type="button"
-					ng-disabled="item.quantity >= 1000"
-					ng-click="$ctrl.addItem(item.name, item.price,1,item.take_away_charges)"
-				>
-					+
-				</button>
-				<button
-					class="btn btn-danger"
-					type="button"
-					ng-disabled="item.quantity <= 1"
-					ng-click="$ctrl.addItem(item.name, item.price, -1,item.take_away_charges)"
-				>
-					-
-				</button>
-			</div>
-		</td>
-		<td class="tdRight">&#8377; {{ item.price * item.quantity }}</td>
-		<td class="tdRight">
-			&#8377; {{ item.take_away_charges * item.quantity }}
-		</td>
-		<td class="tdCenter" title="remove from cart">
-			<a
-				href=""
-				ng-click="$ctrl.addItem(item.name, item.price, -10000000,item.take_away_charges)"
-			>
-				Remove Item
-			</a>
-		</td>
-	</tr>
+			<tr ng-repeat="item in $ctrl.items">
+				<td>{{ item.name }}</td>
+				<td class="tdCenter">
+					<div class="input-append">
+						<input
+							class="text-center"
+							type="tel"
+							ng-model="item.quantity"
+							ng-disabled="true"
+						/>
+						<button
+							class="btn btn-success"
+							type="button"
+							ng-disabled="item.quantity >= 1000"
+							ng-click="$ctrl.addItem(item.name, item.price,1,item.take_away_charges)"
+						>
+							+
+						</button>
+						<button
+							class="btn btn-danger"
+							type="button"
+							ng-disabled="item.quantity <= 1"
+							ng-click="$ctrl.addItem(item.name, item.price, -1,item.take_away_charges)"
+						>
+							-
+						</button>
+					</div>
+				</td>
+				<td class="tdRight">
+					&#8377; {{ item.price * item.quantity }}
+				</td>
+				<td class="tdRight">
+					&#8377; {{ item.take_away_charges * item.quantity }}
+				</td>
+				<td class="tdCenter" title="remove from cart">
+					<a
+						href=""
+						ng-click="$ctrl.addItem(item.name, item.price, -10000000,item.take_away_charges)"
+					>
+						Remove Item
+					</a>
+				</td>
+			</tr>
 
-	<tr class="well">
-		<td><b>Total</b></td>
-		<td class="tdCenter">
-			<b>{{ $ctrl.getTotalCount() }}</b>
-		</td>
-		<td class="tdRight">
-			<b>&#8377; {{ $ctrl.getTotalPrice() }}</b>
-		</td>
-		<td class="tdRight">
-			<b>&#8377; {{ $ctrl.getTotalTakeAwayCharges() }}</b>
-		</td>
-		<td class="tdRight">
-			<b>
-				Total = &#8377; {{ $ctrl.getTotalPrice() +
-				$ctrl.getTotalTakeAwayCharges() }}</b
-			>
-		</td>
-	</tr>
-</table>
-
-<button
-	type="button"
-	class="btn btn-primary btn-block"
-	ng-disabled="$ctrl.getTotalCount()<1"
-	ng-click="$ctrl.confirmOrder()"
->
-	Confirm Order
-</button>
-
-<hr />
-
-<div ng-show="$ctrl.showPayment == true">
-	<h2>Payment options:</h2>
-	<form>
-		<div ng-repeat="p in $ctrl.paymentMethods track by $index">
-			<label class="container"
-				>{{ p }}
-				<input
-					type="radio"
-					name="occurrences"
-					ng-value="p"
-					ng-model="$ctrl.mode"
-				/>
-				<span class="checkmark"></span>
-			</label>
-		</div>
-	</form>
-	<div>The selected value is : {{ $ctrl.mode }}</div>
+			<tr class="well">
+				<td><b>Total</b></td>
+				<td class="tdCenter">
+					<b>{{ $ctrl.getTotalCount() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>&#8377; {{ $ctrl.getTotalPrice() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>&#8377; {{ $ctrl.getTotalTakeAwayCharges() }}</b>
+				</td>
+				<td class="tdRight">
+					<b>
+						Total = &#8377; {{ $ctrl.getTotalPrice() +
+						$ctrl.getTotalTakeAwayCharges() }}</b
+					>
+				</td>
+			</tr>
+		</table>
+	</div>
 
 	<button
 		type="button"
 		class="btn btn-primary btn-block"
-		ng-disabled="$ctrl.mode == null"
-		ng-click="$ctrl.confirmPayment()"
+		ng-disabled="$ctrl.getTotalCount()<1"
+		ng-click="$ctrl.confirmOrder()"
 	>
-		Confirm Payment
+		Confirm Order
 	</button>
+
+	<hr />
+
+	<div ng-show="$ctrl.showPayment == true" class="stuff">
+		<h2 style="text-decoration: underline">
+			Payment options:
+		</h2>
+		<form>
+			<div ng-repeat="p in $ctrl.paymentMethods track by $index">
+				<label class="container"
+					>{{ p }}
+					<input
+						type="radio"
+						name="occurrences"
+						ng-value="p"
+						ng-model="$ctrl.mode"
+					/>
+					<span class="checkmark"></span>
+				</label>
+			</div>
+		</form>
+
+		<button
+			type="button"
+			class="btn btn-primary btn-block"
+			ng-disabled="$ctrl.mode == null"
+			ng-click="$ctrl.confirmPayment()"
+		>
+			Confirm Payment
+		</button>
+	</div>
 </div>
