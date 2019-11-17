@@ -1,4 +1,9 @@
-<div class="form-class">
+<style>
+	.not-matched {
+		background-color: lightpink;
+	}
+</style>
+<div class="form-class" style="width: 30%;">
 	<form class="form-signin" ng-submit="$ctrl.register()">
 		<div ng-show="$ctrl.error" class="alert alert-danger">
 			{{ $ctrl.message }}
@@ -27,7 +32,21 @@
 			ng-model="$ctrl.password"
 		/>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">
+		<input
+			type="password"
+			id="password"
+			class="form-control"
+			placeholder="Renter Password"
+			required
+			ng-model="$ctrl.repassword"
+			ng-class="{'not-matched':$ctrl.password != $ctrl.repassword}"
+		/>
+
+		<button
+			class="btn btn-lg btn-primary btn-block"
+			type="submit"
+			ng-disabled="$ctrl.password != $ctrl.repassword"
+		>
 			Sign up
 		</button>
 	</form>

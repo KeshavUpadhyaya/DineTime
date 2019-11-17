@@ -12,6 +12,7 @@ export default class signupController {
 		this.username = "";
 		this.password = "";
 		this.message = "";
+		this.repassword = "";
 	}
 
 	register() {
