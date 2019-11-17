@@ -21,7 +21,7 @@ class User(UserMixin):
 
 
 def get_db():
-    db = sqlite3.connect("dinetime.db")
+    db = sqlite3.connect("../../dinetime.db")
     cursor = db.cursor()
     return db, cursor
 
@@ -56,7 +56,7 @@ def register():
     encryted_password = encrypt(password)
 
     try:
-        with sqlite3.connect("dinetime.db") as conn:
+        with sqlite3.connect("../../dinetime.db") as conn:
             c = conn.cursor()
             print("inside conn")
             c.execute(
@@ -83,7 +83,7 @@ def login():
     username = json_data["username"]
     password = json_data["password"]
 
-    with sqlite3.connect("dinetime.db") as conn:
+    with sqlite3.connect("../../dinetime.db") as conn:
         c = conn.cursor()
         result = c.execute("select * from customer")
 
