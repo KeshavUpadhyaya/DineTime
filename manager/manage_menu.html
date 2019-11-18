@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage menu</title>
+	<script type="text/javascript">
+		function show_additem(){
+			var D = document.getElementById("additem_div")
+			D.style.display='block';
+		}
+		function hide_additem(){
+			var D = document.getElementById("additem_div")
+			D.style.display='none';
+		}
+		function getItemID (event){
+			var L = event.parentNode.parentNode.parentNode.childNodes
+			var ID = L[1].innerHTML
+			var Box = event.previousSibling.previousSibling;
+			Box.value = ID;
+			//alert(Box.style.display)
+		}
+		function getItemID2 (event){
+			var Box = event.previousSibling.previousSibling;
+			var L = event.parentNode.parentNode.parentNode.parentNode.childNodes
+			var ID = L[1].innerHTML;
+			Box.value = ID;
+		}
+		function edit_catid(event){
+			edit_element = event.nextSibling.nextSibling.nextSibling;
+			if (edit_element.style.display==='none'){
+				edit_element.style.display='block'
+				// fill in text box with existing category ID
+				cur_row = event.parentNode.parentNode;
+				row_cat_id = cur_row.childNodes[3].innerHTML;
+				edit_element.childNodes[1].childNodes[2].value = row_cat_id;
+			}
+			else{
+				edit_element.style.display='none'
+			}
+		}
+		function edit_iname(event){
+			edit_element = event.nextSibling.nextSibling.nextSibling;
+			if (edit_element.style.display==='none'){
+				edit_element.style.display='block'
+				// fill in text box with existing item name
+				cur_row = event.parentNode.parentNode;
+				row_cat_id = cur_row.childNodes[5].innerHTML;
+				edit_element.childNodes[1].childNodes[2].value = row_cat_id;
+			}
+			else{
+				edit_element.style.display='none'
+			}
+		}
+		function edit_price(event){
+			edit_element = event.nextSibling.nextSibling.nextSibling;
+			if (edit_element.style.display==='none'){
+				edit_element.style.display='block'
+				// fill in text box with existing price
+				cur_row = event.parentNode.parentNode;
+				row_cat_id = cur_row.childNodes[7].innerHTML;
+				edit_element.childNodes[1].childNodes[2].value = row_cat_id;
+			}
+			else{
+				edit_element.style.display='none'
+			}
+		}
+	</script>
+</head>
+<style type="text/css"> 
+      
+    th:tr{ 
+        color: blue; 
+  
+    } 
+    tr:nth-of-type(2n){ 
+        border: 1px solid black; 
+        background-color: rgba(150, 150, 150, 0.5); 
+  
+    } 
+  
+    td{ 
+        padding: 8px 8px; 
+        border: 1px solid black; 
+    } 
+</style> 
+<body>
+	<a href="/">Home</a>
+	<a href="manage_menu">Manage Menu</a>
+	<!-- <button formtarget="_self" id="b2" onclick="myFunction(this)">Manage Feedback</button> -->
+	<a href="manage_feedback">Manage Feedback</a>
+	<a href="manage_employees">Manage Employees</a>
+	<h1>Manage menu</h1>
+	<table style="margin-left: 20px;"> 
+    <th> 
+        <tr style="color: green; ">     
+        <td>Item ID</td> 
+        <td>Category ID</td> 
+        <td>Item Name</td>
+        <td>Price</td>
+</tr> 
+    </th> 
+      
+{%for i in Items%} 
+<tr>
+  {%for j in range(0,4)%}
+    <td>{{i[j]}}</td>  
+{%endfor%} 
+<td>
+	<div>
+		<form action="deletesuccess" method="post">
+			<input type="text" name="item" id="itemid" style="display: none;">
+			<input type="submit" value="Delete" onclick="getItemID(this)">
+		</form>
+	</div>
+</td>
+<td>
+	<button id="edit_catid" onclick="edit_catid(this)">Edit Category ID/Hide</button><br>
+	<div id="hide_edit_catid" style="display: none;">
+		<form action="editcatidsuccess" method="post">
+			<br><input type="text" name="new_catid" id="new_catid" placeholder="Category ID"><br><br>
+			<input type="text" name="item" id="itemid2" style="display: none;">
+			<input type="submit" onclick="getItemID2(this)">
+		</form>
+	</div>
+</td>
+<td>
+	<button id="edit_iname" onclick="edit_iname(this)">Edit Item Name/Hide</button><br>
+	<div id="hide_edit_iname" style="display: none;">
+		<form action="editinamesuccess" method="post">
+			<br><input type="text" name="new_iname" id="new_iname" placeholder="Item Name"><br><br>
+			<input type="text" name="item" id="itemid2" style="display: none;">
+			<input type="submit" onclick="getItemID2(this)">
+		</form>
+	</div>
+</td>
+<td>
+	<button id="edit_price" onclick="edit_price(this)">Edit Price/Hide</button><br>
+	<div id="hide_edit_price" style="display: none;">
+		<form action="editpricesuccess" method="post">
+			<br><input type="text" name="new_price" id="new_price" placeholder="Price"><br><br>
+			<input type="text" name="item" id="itemid2" style="display: none;">
+			<input type="submit" onclick="getItemID2(this)">
+		</form>
+	</div>
+</td>
+</tr> 
+{%endfor%} 
+  
+
+  
+</table>
+<div id="additem_div" style="display: none;">
+	<form action="addsuccess" method="post">
+		<input type="text" name="cat_id" id="cat_id" placeholder="Category ID"><br>
+		<input type="text" name="item_name" id="item_name" placeholder="Item Name"><br>
+		<input type="text" name="price" id="price" placeholder="Price"><br>
+		<input type="submit">
+		
+	</form>
+</div>
+<br>
+<button id="additem" onclick="show_additem()">Add item</button>
+<button id="no_additem" onclick="hide_additem()">Hide</button>
+</body>
+</html>
