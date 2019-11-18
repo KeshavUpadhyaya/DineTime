@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Manage Feedback</title>
+</head>
+<style type="text/css"> 
+      
+    th:tr{ 
+        color: blue; 
+  
+    } 
+    tr:nth-of-type(2n){ 
+        border: 1px solid black; 
+        background-color: rgba(150, 150, 150, 0.5); 
+  
+    } 
+  
+    td{ 
+        padding: 8px 8px; 
+        border: 1px solid black; 
+    } 
+</style> 
+<script type="text/javascript">
+	function sortRatings(){
+		//need to correct this
+		//alert ("Sorting");
+		var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("feedbackTable");
+  alert (table)
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+	}
+</script>
+<body>
+	<a href="/">Home</a>
+	<a href="manage_menu">Manage Menu</a>
+	<!-- <button formtarget="_self" id="b2" onclick="myFunction(this)">Manage Feedback</button> -->
+	<a href="manage_feedback">Manage Feedback</a>
+	<a href="manage_employees">Manage Employees</a>
+	<h1>Manage feedback</h1>
+	<table style="margin-left: 20px; width: 70%" id="feedbackTable"> 
+    <th> 
+        <tr style="color: green; ">     
+        <td>Feedback ID</td> 
+        <td>Order ID</td> 
+        <td>Ambience</td>
+        <td>Food quality</td>
+        <td>Value for Money</td>
+        <td>Overall rating
+        	<!-- <button value="Sort" onclick="sortRatings()"></button> -->
+        </td>
+        <td>Comments</td>
+		</tr> 
+    </th> 
+    {%for i in Items%} 
+	<tr>
+  	{%for j in range(0,7)%}
+    <td>{{i[j]}}</td>  
+	{%endfor%} 
+	</tr> 
+	{%endfor%} 
+</table>
+</body>
+</html>
