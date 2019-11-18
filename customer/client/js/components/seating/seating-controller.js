@@ -86,6 +86,7 @@ export default class seatingController {
 	}
 
 	toggleSelection(tableId) {
+		console.log(tableId);
 		var idx = this.selection.indexOf(tableId);
 
 		if (idx > -1) {
@@ -93,6 +94,8 @@ export default class seatingController {
 		} else {
 			this.selection.push(tableId);
 		}
+
+		console.log(this.selection);
 	}
 
 	noTableSelected() {

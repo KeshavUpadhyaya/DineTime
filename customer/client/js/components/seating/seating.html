@@ -1,97 +1,85 @@
 <style>
-	/* The container */
-	.container {
-		display: block;
-		position: relative;
-		padding-left: 35px;
-		margin-bottom: 12px;
-		cursor: pointer;
-		font-size: 22px;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
+	ul {
+		list-style-type: none;
 	}
 
-	/* Hide the browser's default checkbox */
-	.container input {
-		position: absolute;
-		opacity: 0;
-		cursor: pointer;
-		height: 0;
-		width: 0;
+	li {
+		display: inline-block;
 	}
 
-	/* Create a custom checkbox */
-	.checkmark {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 25px;
-		width: 25px;
-		background-color: #eee;
-	}
-
-	/* On mouse-over, add a grey background color */
-	.container:hover input ~ .checkmark {
-		background-color: #ccc;
-	}
-
-	/* When the checkbox is checked, add a blue background */
-	.container input:checked ~ .checkmark {
-		background-color: #2196f3;
-	}
-
-	/* Create the checkmark/indicator (hidden when not checked) */
-	.checkmark:after {
-		content: "";
-		position: absolute;
+	input[type="checkbox"][id^="cb"] {
 		display: none;
 	}
 
-	/* Show the checkmark when checked */
-	.container input:checked ~ .checkmark:after {
+	label {
+		border: 1px solid #fff;
+		padding: 10px;
 		display: block;
+		position: relative;
+		margin: 10px;
+		cursor: pointer;
 	}
 
-	/* Style the checkmark/indicator */
-	.container .checkmark:after {
-		left: 9px;
-		top: 5px;
-		width: 5px;
-		height: 10px;
-		border: solid white;
-		border-width: 0 3px 3px 0;
-		-webkit-transform: rotate(45deg);
-		-ms-transform: rotate(45deg);
-		transform: rotate(45deg);
+	label:before {
+		background-color: white;
+		color: white;
+		content: " ";
+		display: block;
+		border-radius: 50%;
+		border: 1px solid grey;
+		position: absolute;
+		top: -5px;
+		left: -5px;
+		width: 25px;
+		height: 25px;
+		text-align: center;
+		line-height: 28px;
+		transition-duration: 0.4s;
+		transform: scale(0);
+	}
+
+	label img {
+		height: 86px;
+		width: 148px;
+		transition-duration: 0.2s;
+		transform-origin: 50% 50%;
+	}
+
+	:checked + label {
+		border-color: #ddd;
+	}
+
+	:checked + label:before {
+		content: "✓";
+		background-color: green;
+		transform: scale(1);
+	}
+
+	:checked + label img {
+		transform: scale(0.9);
+		box-shadow: 0 0 5px #333;
+		z-index: -1;
 	}
 </style>
+<h1 style="color: #ffffff;">Book your table</h1>
 
-<h1>Book your table</h1>
-<img ng-src="seating.png" />
-
-<hr />
-
-<h3 style="color: blue;"><u> Available tables </u></h3>
-
-<label
-	ng-repeat="table in $ctrl.seatingData"
-	class="container"
-	ng-hide="table.available == 0"
->
-	Table {{ table.table_id }}
-	<input
-		type="checkbox"
-		value="{{ table.table_id }}"
-		ng-checked="$ctrl.selection.indexOf(table.table_id)>-1"
-		ng-click="$ctrl.toggleSelection(table.table_id)"
-	/>
-	<span class="checkmark"></span>
-	<br />
-</label>
-
-<br />
+<ul style=" width: 100%;background-color: #f5f5f5;opacity: 0.9;">
+	<li ng-repeat="table in $ctrl.seatingData">
+		<input
+			type="checkbox"
+			ng-attr-id="{{'cb'+$index}}"
+			value="{{ table.table_id }}"
+			ng-checked="$ctrl.selection.indexOf(table.table_id)>-1"
+			ng-click="$ctrl.toggleSelection(table.table_id)"
+			ng-disabled="table.available == 0"
+		/>
+		<label for="{{'cb'+$index}}">
+			<img ng-if="table.available != 0" ng-src="table-green.png" />
+			<img ng-if="table.available == 0" ng-src="table-red.png" />
+			<p>{{table.table_id}}</p>
+		</label>
+	</li>
+</ul>
 
 <div style="margin: 0 auto;">
 	<button
@@ -103,6 +91,3 @@
 		Submit
 	</button>
 </div>
-
-<br />
-<br />
