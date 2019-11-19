@@ -80,7 +80,7 @@ export default class orderController {
 		const ctrl = this;
 		const orderId = Date.now();
 		sessionStorage.orderId = orderId;
-		const customerId = sessionStorage.customerId;
+		const customerId = sessionStorage.username;
 		const takeAway = parseInt(sessionStorage.takeAway);
 		var today = new Date();
 		var dd = String(today.getDate()).padStart(2, "0");
