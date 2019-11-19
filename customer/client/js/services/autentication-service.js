@@ -7,14 +7,13 @@ export default class authService {
 		this.$http = $http;
 		this.$q = $q;
 		this.$timeout = $timeout;
-		this.ip = "http://localhost:8000";
+		this.ip = "http://localhost:5000";
 	}
 
 	register(username, password) {
 		return this.$http.post(this.ip + "/api/v1/register", {
 			username: username,
-			password: password,
-			fav_category_id: 1
+			password: password
 		});
 	}
 
