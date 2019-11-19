@@ -92,11 +92,13 @@ export default class menuController {
 
 	getFavItems() {
 		const ctrl = this;
-		this.dataService.getFavouriteItems().then(function(response) {
-			console.log(response.data);
-			ctrl.favData = response.data.Favourites;
-			console.log(ctrl.favData);
-		});
+		this.dataService
+			.getFavouriteItems(sessionStorage.username)
+			.then(function(response) {
+				console.log("response data of getFavItems", response.data);
+				ctrl.favData = response.data.Favourites;
+				console.log("favData of getFavItems", ctrl.favData);
+			});
 	}
 
 	removeFavouriteItem(itemName) {
