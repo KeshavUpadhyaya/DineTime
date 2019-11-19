@@ -14,14 +14,17 @@ from flask_login import logout_user
 from flask_login import login_required
 from flask_login import current_user
 import requests
+import json
+import ast
 
+db_path = "../../dinetime.db"
 
 class User(UserMixin):
     pass
 
 
 def get_db():
-    db = sqlite3.connect("../../dinetime.db")
+    db = sqlite3.connect(db_path)
     cursor = db.cursor()
     return db, cursor
 
@@ -52,20 +55,24 @@ def register():
     print(json_data)
     username = json_data["username"]
     password = json_data["password"]
-    fav_category_id = json_data["fav_category_id"]
     encryted_password = encrypt(password)
 
     try:
-        with sqlite3.connect("../../dinetime.db") as conn:
+        with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
             print("inside conn")
             c.execute(
-                "insert into customer values(:customer_id,:password,:fav_category_id)",
+                "insert into customer values(:customer_id,:password)",
                 {
                     "customer_id": username,
-                    "password": encryted_password,
-                    "fav_category_id": fav_category_id,
+                    "password": encryted_password
                 },
+            )
+
+            c.execute(
+                "INSERT INTO favourites ('customer_id') VALUES ('"
+                + str(username)
+                + "')"
             )
         message = "success"
         status = 1
@@ -83,7 +90,7 @@ def login():
     username = json_data["username"]
     password = json_data["password"]
 
-    with sqlite3.connect("../../dinetime.db") as conn:
+    with sqlite3.connect(db_path) as conn:
         c = conn.cursor()
         result = c.execute("select * from customer")
 
@@ -123,7 +130,8 @@ def logged_in():
 def get_fav(customer_id):
     cid = customer_id
     conn, cursor = get_db()
-    cursor.execute("SELECT item_name from favourites where customer_id=" + str(cid))
+    print("cid = ",cid)
+    cursor.execute("select item_name from favourites where customer_id = ?",(cid,))
     fav = cursor.fetchall()
     # if(len(fav)<1):
 
@@ -147,7 +155,8 @@ def get_fav(customer_id):
             fav_list.append(temp)
 
     conn.close()
-    final = {"Favorites": fav_list}
+    final = {"Favourites": fav_list}
+    print(final)
     return jsonify(final)
 
 
@@ -242,10 +251,142 @@ def payment_approval():
     # a=a-1
     # print(type(temp))
     value = int(temp[0][1])
-
-    d = {"approval": value}
-    return jsonify(d)
     conn.close()
+    d = {"approval": value}
+    print(d)
+    return jsonify(d)
+    
+
+@app.route('/api/v1/rate',methods=['POST'])
+def rating_update():
+    try:
+        conn,cursor = get_db()
+        req = request.get_json()
+        values = json.dumps(req)
+        pres = ast.literal_eval(values)
+        print(pres)
+        cursor.execute('INSERT INTO feedback (order_id, ambience, food_quality, value_for_money,feedback_text) VALUES (:order_id, :ambience, :food_quality, :value_for_money, :feedback_text);', pres)
+        conn.commit()
+        conn.close()
+        d = {'status': 1}
+        return jsonify(d)
+    except sqlite3.Error as error:
+        print(error)
+        d = {'status': 0}
+        return jsonify(d)
+	
+
+
+@app.route('/api/v1/menu',methods=['GET'])
+def fetch_menu():
+	conn,cursor = get_db()
+	cursor.execute("SELECT * FROM item_category ")
+	b = cursor.fetchall()
+	#print(a)
+	result = {}
+	for row in b:
+		cursor.execute("SELECT name,price,take_away_charges from menu WHERE category_id ="+ str(row[0]))
+		temp = cursor.fetchall()
+		temp_list = []
+		for i in temp:
+			t = {}
+			t["name"] = i[0]
+			t["price"] = i[1]
+			t["take_away_charges"] = i[2]
+			temp_list.append(t)
+		result[row[1]]= temp_list
+	conn.close()
+	return jsonify(result)
+	
+@app.route('/api/v1/order',methods=['POST'])
+def place_order():
+    try:
+        conn,cursor = get_db()
+        req = request.get_json()
+        values = json.dumps(req)
+        pres = ast.literal_eval(values)
+        cursor.execute('INSERT INTO orders (order_id, customer_id, take_away, time_in, time_out) VALUES (:order_id, :customer_id, :take_away, :time_in, 00);', pres)
+        item_list = pres["items"]
+        order_id = pres["order_id"]
+        print(order_id)
+        for i in item_list:
+            cursor.execute('SELECT item_id FROM menu WHERE name = ?', (i["name"],))
+            b = cursor.fetchone()
+            cursor.execute('INSERT INTO order_items values (?, ?, ?)',(order_id, b[0], int(i["quantity"])))
+        cursor.execute("insert into payment_approval(order_id) values (?)",(int(order_id),))
+        conn.commit()
+        conn.close()
+        d = {'status': 1}
+        return jsonify(d)
+    except sqlite3.Error as error:
+        d = {'status': 0}
+        return jsonify(d)
+
+
+
+	
+@app.route('/api/v1/payments',methods=['GET'])
+def fetch_payment_method():
+    conn,cursor = get_db()
+    cursor.execute("SELECT * from payment_methods")
+    meth = cursor.fetchall()
+    res = {}
+    meth_list = []
+    for i in meth:
+        meth_list.append(i[0])
+    res["payment_modes"] = meth_list
+    print(res)
+    return jsonify(res)
+
+		
+
+@app.route('/api/v1/tables',methods=['GET'])
+def gettables():
+	result = {}
+	conn,cursor = get_db()
+	cursor.execute("SELECT table_id,reserved FROM tables order by table_id")
+	a = cursor.fetchall()
+	result["tables"] = []
+	for i in a:
+		t = {}
+		t["table_id"] = i[0]
+		if i[1] == 0:
+			t["available"] = 1
+		else:
+			t["available"] = 0 
+		result["tables"].append(t)
+	return jsonify(result)
+
+@app.route('/api/v1/booktable',methods=['POST'])
+def booktables():
+	json_data = request.json
+	print(json_data)
+	customer_id = json_data["customer_id"]
+	table_ids = json_data["table_ids"]
+	time_in = json_data["time_in"]
+	available_tables = []
+	output = []
+	try:
+		with sqlite3.connect(db_path) as conn:
+			c = conn.cursor()
+			c.execute("select table_id,reserved from tables where reserved = 0")
+			result = c.fetchall()
+			for t in result:
+				if t[1] == 0:
+					available_tables.append(t[0])
+			print(available_tables)
+
+			for t in table_ids:
+				if t in available_tables:
+					c.execute("update tables set customer_id = ?, reserved = ? ,time_in = ?, time_out = ? where table_id = ?",(customer_id,1,time_in,0,t))
+					conn.commit()
+					output.append({"table_id":t,"status":1})
+				else:
+					output.append({"table_id":t,"status":0})
+	except Exception as e:
+		print(e)
+	
+	return jsonify({"tables":output})
 
 
 @app.route("/")
@@ -254,6 +395,6 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000)
+    app.run(debug=True, port=5000)
     # app.run(host="0.0.0.0",port=80)
 
