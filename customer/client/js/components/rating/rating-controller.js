@@ -18,7 +18,7 @@ export default class ratingController {
 		const ctrl = this;
 		this.dataService
 			.sendRating(
-				this.dataService.order.id,
+				sessionStorage.orderId,
 				this.ambienceRating,
 				this.foodRating,
 				this.moneyRating,
