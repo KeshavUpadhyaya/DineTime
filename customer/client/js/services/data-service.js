@@ -46,6 +46,7 @@ export default class dataService {
 	}
 
 	getFavouriteItems(customerId) {
+		console.log(customerId);
 		return this.$http.get(this.ip + "/api/v1/getfav/" + customerId);
 	}
 
