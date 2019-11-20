@@ -8,17 +8,21 @@
 <h3>Order Information</h3>  
 <table border=5>  
     <thead>  
-        <td>ID</td>  
-        <td>Table no.</td>  
-        <td>Order</td>  
+        <td>Order_id</td>  
+        <td>Customer_id</td>  
+        <td>Take Away</td> 
+        <td>Time_in</td>  
+        <td>Time_out</td>    
     </thead>  
       
     {% for row in rows %}  
       
         <tr>  
-            <td>{{row["id"]}}</td>  
-            <td>{{row["tableno"]}}</td>  
-            <td>{{row["ord"]}}</td>  
+            <td>{{row["order_id"]}}</td>  
+            <td>{{row["customer_id"]}}</td>  
+            <td>{{row["take_away"]}}</td> 
+            <td>{{row["time_in"]}}</td>  
+            <td>{{row["time_out"]}}</td>   
         </tr>  
       
     {% endfor %}  

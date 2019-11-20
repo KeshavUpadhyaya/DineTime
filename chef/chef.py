@@ -17,7 +17,7 @@ def change():
 
 @app.route("/view")  
 def view():  
-    con = sqlite3.connect("waiter.db")  
+    con = sqlite3.connect("dinetime.db")  
     con.row_factory = sqlite3.Row  
     cur = con.cursor()  
     cur.execute("select * from orders")  
@@ -32,10 +32,10 @@ def delete():
 @app.route("/deleterecord",methods = ["POST"])  
 def deleterecord():  
     id = request.form["id"]  
-    with sqlite3.connect("waiter.db") as con:  
+    with sqlite3.connect("dinetime.db") as con:  
         try:  
             cur = con.cursor()  
-            cur.execute("delete from orders where id = ?",id)  
+            cur.execute("delete from orders where order_id = ?",id)  
             msg = "record successfully deleted"  
         except:  
             msg = "can't be deleted"  
@@ -48,12 +48,15 @@ def saveDetails():
     msg = "msg"  
     if request.method == "POST":  
         try:  
-            id = int(request.form["id"])  
-            tableno = int(request.form["tableno"]) 
-            order = request.form["order"]  
-            with sqlite3.connect("waiter.db") as con:  
+            order_id = int(request.form["order_id"])  
+            customer_id = request.form["customer_id"]
+            take_away = int(request.form["take_away"])
+            time_in = request_form["time_in"]
+            time_out = request_form["time_out"]
+            print(order_id, customer_id, take_away, time_in, time_out)
+            with sqlite3.connect("dinetime.db") as con:  
                 cur = con.cursor()  
-                cur.execute("INSERT into orders (id, tableno, ord) values (?,?,?)",(id,tableno,order))  
+                cur.execute("INSERT into orders(order_id, customer_id, take_away, time_in, time_out) values (?,?,?,?,?)",(order_id, customer_id, take_away, time_in, time_out))  
                 con.commit()  
                 msg = "Order successfully Added"  
         except:  
