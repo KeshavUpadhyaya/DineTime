@@ -1,0 +1,40 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>List</title>  
+</head>  
+<body>  
+  
+<h3>Request Information</h3>  
+<table border=5>  
+    <thead>  
+        <td>ID</td>  
+        <td>Ingredient</td>  
+        <td>Amount</td>  
+    </thead>  
+      
+    {% for row in rows %}  
+      
+        <tr>  
+            <td>{{row["id"]}}</td>  
+            <td>{{row["ingredient"]}}</td>  
+            <td>{{row["amount"]}}</td>  
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br><br>  
+  
+<a href="/">Go back to home page</a>  
+
+    <form action = "/savereq" method="post">  
+    <table>  
+        <tr><td>ID</td><td><input type="text" name="id"></td></tr>  
+        <tr><td>INGREDIENT</td><td><input type="text" name="ingredient"></td></tr>  
+        <tr><td>AMOUNT</td><td><input type="text" name="amount"></td></tr>  
+        <tr><td><input type="submit" value="Submit"></td></tr>  
+    </table>  
+    </form>  
+  
+</body>  
+</html>
