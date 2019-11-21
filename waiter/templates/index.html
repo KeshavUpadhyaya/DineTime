@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  <meta http-equiv="Refresh" content="5">
+  <!---<meta http-equiv="Refresh" content="5">--->
   <meta charset="UTF-8">
   <title>Notifications</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
@@ -21,10 +21,10 @@
     <i class="fa fa-bell-o"></i>
   </div>
   <div class="Message-body">
-    <p>YO come get the food</p>
+    <p style="color:black">Order {{i[1]}} is ready for pickup for customer {{i[0]}}</p>
     <button class="Message-button" onclick="changeNotif(event)">Mark as Delivered</button>
   </div>
-  <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
+  <button class="Message-close js-messageClose" onclick="removeNotif(event)"><i class="fa fa-times"></i></button>
 </div>
 {% endfor %}
 </div>
@@ -38,11 +38,22 @@ function closeMessage(el) {
 $('.js-messageClose').on('click', function(e) {
   closeMessage($(this).closest('.Message'));
 });
+/*
 $(document).ready(function() {
   setTimeout(function() {
     closeMessage($('#js-timer'));
   }, 5000);
-});
+});*/
+function removeNotif(event) {
+  var x=event.currentTarget;
+  //alert(x);
+  var t=x.parentNode.getElementsByClassName('Message-body')[0].children[0].innerHTML;
+  //alert(t, t.charAt(6), t.charAt(t.length-2))
+  var xmlHttp = new XMLHttpRequest;
+  url="http://localhost:5000/?req=-1&cusid="+t.charAt(t.length-2)+ "&ordid="+ t.charAt(6);
+  xmlHttp.open("GET", url, true);
+  xmlHttp.send();
+}
 function changeNotif(event) {
   var x = event.target;
   var y=x.parentNode.parentNode;
@@ -53,10 +64,12 @@ function changeNotif(event) {
       break;
     }
   }
-
-  x.parentNode.getElementsByTagName("p")[0].innerHTML="I gatz your food";
+  var temp=x.parentNode.getElementsByTagName("p")[0].innerHTML;
+  //alert(temp);
+  t1=temp.charAt(6);
+  t2=temp.charAt(temp.length-1);
+  x.parentNode.getElementsByTagName("p")[0].innerHTML="Order "+t1.toString(10)+" was delivered to customer "+t2.toString(10)+"!";
   x.parentNode.removeChild(x);
-  setTimeout(function() {y.classList.add("is-hidden")}, 10000)
 }
 </script>
 </body>
