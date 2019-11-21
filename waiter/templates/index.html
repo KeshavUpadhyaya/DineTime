@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta http-equiv="Refresh" content="5">
+  <meta charset="UTF-8">
+  <title>Notifications</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+  <div id='title'>Notifications</div>
+</head>
+<body>
+<div id='stars'></div>
+<div id='stars2'></div>
+<div id='stars3'></div>
+<div style="margin:50px;">
+{% for i in nos %}
+<div class="Message Message--forange">
+  <div class="Message-icon">
+    <i class="fa fa-bell-o"></i>
+  </div>
+  <div class="Message-body">
+    <p>YO come get the food</p>
+    <button class="Message-button" onclick="changeNotif(event)">Mark as Delivered</button>
+  </div>
+  <button class="Message-close js-messageClose"><i class="fa fa-times"></i></button>
+</div>
+{% endfor %}
+</div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'>
+</script>
+<script>
+function closeMessage(el) {
+  el.addClass('is-hidden');
+}
+$('.js-messageClose').on('click', function(e) {
+  closeMessage($(this).closest('.Message'));
+});
+$(document).ready(function() {
+  setTimeout(function() {
+    closeMessage($('#js-timer'));
+  }, 5000);
+});
+function changeNotif(event) {
+  var x = event.target;
+  var y=x.parentNode.parentNode;
+  y.className=y.className.replace("Message--forange", "Message--green");
+  for (var i = 0; i < y.childNodes.length; i++) {
+    if (y.childNodes[i].className == "Message-icon") {
+      y.getElementsByTagName('i')[0].className= y.getElementsByTagName('i')[0].className.replace("fa-bell-o", "fa-check");
+      break;
+    }
+  }
+
+  x.parentNode.getElementsByTagName("p")[0].innerHTML="I gatz your food";
+  x.parentNode.removeChild(x);
+  setTimeout(function() {y.classList.add("is-hidden")}, 10000)
+}
+</script>
+</body>
+</html>
