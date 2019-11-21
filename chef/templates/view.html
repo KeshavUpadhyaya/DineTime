@@ -2,17 +2,96 @@
 <html>  
 <head>  
     <title>List</title>  
+
+     <style>
+    .b_buton{
+    background-color: #555555;
+        }
+        .fontstuff
+        {
+            font-size: 30px;
+            color: white;
+        }
+         .Fontstuff
+        {
+            font-size: 30px;
+            color: black;
+        }
+        .FontStuff{
+               font-weight: thick;
+        font-size: 60px;
+        }
+        .button_link {
+  background-color: #4D1509;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+    </style>
+    <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!--
+Victory HTML CSS Template
+https://templatemo.com/tm-507-victory
+-->
+        <title>Victory - Our Menus</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/fontAwesome.css">
+        <link rel="stylesheet" href="css/hero-slider.css">
+        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Spectral:100,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <title>Manage menu</title>
+    <script src="jquery.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->  
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
 </head>  
 <body>  
   
-<h3>Order Information</h3>  
+<div class="limiter">
+
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table100">
+                    <h1 class="FontStuff">Order Information</h1>  
+
 <table border=5>  
     <thead>  
-        <td>Order_id</td>  
-        <td>Customer_id</td>  
-        <td>Take Away</td> 
-        <td>Time_in</td>  
-        <td>Time_out</td>    
+        <td class="fontstuff">Order_id</td>  
+        <td class="fontstuff">Customer_id</td>  
+        <td class="fontstuff">Take Away</td> 
+        <td class="fontstuff">Time_in</td>  
+        <td class="fontstuff">Time_out</td>    
     </thead>  
       
     {% for row in rows %}  
@@ -27,9 +106,25 @@
       
     {% endfor %}  
 </table>  
-<br><br>  
-  
-<a href="/">Go back to home page</a>  
+<br><br> 
+<a class="Fontstuff" href="/"><button class="b_button"> Back </button></a>   
+  </div>
+</div>
+</div>
+</div>
+<script>
+    function poll(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","http://localhost:5000/view",true)
+    xhr.send()
+
+    xhr.onload = function(){
+        location.reload();
+        }
+    }
+
+    setInterval(poll,5000)
+</script>
   
 </body>  
 </html>

@@ -1,7 +1,11 @@
 from flask import *  
 import sqlite3  
+import requests
+from flask_cors import CORS, cross_origin
   
-app = Flask(__name__)  
+app = Flask(__name__) 
+CORS(app)
+ 
  
 @app.route("/")  
 def index():  
@@ -16,6 +20,7 @@ def change():
     return render_template("change.html")  
 
 @app.route("/view")  
+@cross_origin()
 def view():  
     con = sqlite3.connect("dinetime.db")  
     con.row_factory = sqlite3.Row  
@@ -27,44 +32,45 @@ def view():
  
 @app.route("/delete")  
 def delete():  
-    return render_template("delete.html")  
+    
+    requests.get("")
+    return render_template("delete.html",rows=rows)  
  
 @app.route("/deleterecord",methods = ["POST"])  
 def deleterecord():  
-    id = request.form["id"]  
+    ip = ""
+    id = int(request.form["id"])
+    con = sqlite3.connect("dinetime.db")  
+    con.row_factory = sqlite3.Row  
+    cur = con.cursor()  
+    cur.execute("select * from orders where order_id = ?",(id,))  
+    rows = cur.fetchall()
+    for i in rows:
+        cus_id = i["customer_id"]
+    requests.get(ip,"?req=1&cusid=",str(cus_id),"&ordid=",str(id))
     with sqlite3.connect("dinetime.db") as con:  
-        try:  
-            cur = con.cursor()  
-            cur.execute("delete from orders where order_id = ?",id)  
-            msg = "record successfully deleted"  
-        except:  
-            msg = "can't be deleted"  
-        finally:  
-            return render_template("delete_record.html",msg = msg)  
+        cur = con.cursor()  
+        cur.execute("delete from orders where order_id = ?",(id,)) 
+        msg = "record successfully deleted"  
+        return render_template("delete_record.html",msg = msg)  
 
   
-@app.route("/savedetails",methods = ["POST","GET"])  
-def saveDetails():  
-    msg = "msg"  
-    if request.method == "POST":  
-        try:  
-            order_id = int(request.form["order_id"])  
-            customer_id = request.form["customer_id"]
-            take_away = int(request.form["take_away"])
-            time_in = request_form["time_in"]
-            time_out = request_form["time_out"]
-            print(order_id, customer_id, take_away, time_in, time_out)
-            with sqlite3.connect("dinetime.db") as con:  
-                cur = con.cursor()  
-                cur.execute("INSERT into orders(order_id, customer_id, take_away, time_in, time_out) values (?,?,?,?,?)",(order_id, customer_id, take_away, time_in, time_out))  
-                con.commit()  
-                msg = "Order successfully Added"  
-        except:  
-            con.rollback()  
-            msg = "We can not add the order to the list"  
-        finally:  
-            return render_template("success.html",msg = msg)  
-            con.close()  
+@app.route("/savedetails",methods = ["POST"])  
+def saveDetails():    
+    order_id = int(request.form["order_id"])  
+    customer_id = request.form["customer_id"]
+    take_away = int(request.form["take_away"])
+    time_in = request.form["time_in"]
+    time_out = request.form["time_out"]
+
+    with sqlite3.connect("dinetime.db") as con:  
+        cur = con.cursor()  
+        cur.execute("INSERT into orders(order_id, customer_id, take_away, time_in, time_out) values (?,?,?,?,?)",(order_id, customer_id, take_away, time_in, time_out))  
+        con.commit()  
+        msg = "Order successfully Added"  
+ 
+    return render_template("success.html",msg = msg)  
+    con.close()  
 
 @app.route("/request")  
 def req():  
@@ -81,7 +87,7 @@ def saveReq():
     if request.method == "POST":  
         try:  
             id = int(request.form["id"])  
-            ingredient = request.form["ingredient"] 
+            ingredient = string(request.form["ingredient"]) 
             amount = int(request.form["amount"]) 
             with sqlite3.connect("waiter.db") as con:  
                 cur = con.cursor()  
